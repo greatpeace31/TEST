@@ -51,6 +51,14 @@
 
         const votedUsers = new Set(); // 중복 투표 방지
 
+        // 페이지 로드 시 로그인 상태 확인
+        window.onload = function() {
+            if (sessionStorage.getItem('loggedIn')) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('voteSection').style.display = 'block';
+            }
+        };
+
         document.getElementById('loginForm').onsubmit = function(event) {
             event.preventDefault();
             const employeeId = document.getElementById('employeeId').value;
@@ -58,6 +66,7 @@
 
             // 로그인 확인
             if (validUsers[employeeId] === password) {
+                sessionStorage.setItem('loggedIn', 'true'); // 로그인 상태 저장
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('voteSection').style.display = 'block';
             } else {
@@ -93,6 +102,9 @@
                     votedUsers.add(employeeId); // 사용자 추가
                     document.getElementById('thankYou').style.display = 'block';
                     document.getElementById('voteSection').style.display = 'none';
+
+                    // 로그아웃 처리
+                    sessionStorage.removeItem('loggedIn');
                 } else {
                     console.error('Error:', response.statusText);
                     alert('투표 저장에 실패했습니다. 나중에 다시 시도해 주세요.');

@@ -37,6 +37,7 @@
     <!-- Firebase SDK 추가 -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
 
     <script>
         // Firebase 설정 정보
@@ -53,35 +54,57 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore(app);
 
-        // 하드코딩된 로그인 정보
-        const validUser = {
-            employeeId: '106855', // 사번 (예시)
-            password: '970301' // 비밀번호 (예시)
-        };
+        // DOMContentLoaded 이벤트 리스너 추가
+        document.addEventListener("DOMContentLoaded", function() {
+            // 하드코딩된 로그인 정보
+            const validUser = {
+                employeeId: '106855', // 사번 (예시)
+                password: '970301' // 비밀번호 (예시)
+            };
 
-        // 로그인 버튼 클릭 이벤트
-        document.getElementById('loginButton').addEventListener('click', function() {
-            const employeeId = document.getElementById('employeeId').value;
-            const password = document.getElementById('password').value;
-            const loginError = document.getElementById('loginError');
+            // 로그인 버튼 클릭 이벤트
+            document.getElementById('loginButton').addEventListener('click', function() {
+                const employeeId = document.getElementById('employeeId').value;
+                const password = document.getElementById('password').value;
+                const loginError = document.getElementById('loginError');
 
-            // 로그인 검증
-            if (employeeId === validUser.employeeId && password === validUser.password) {
-                // 로그인 성공
-                loginError.textContent = '';
-                document.getElementById('loginSection').style.display = 'none'; // 로그인 섹션 숨기기
-                document.getElementById('voteSection').style.display = 'block'; // 투표 섹션 보이기
-            } else {
-                // 로그인 실패
-                loginError.textContent = '사번 또는 비밀번호가 올바르지 않습니다.';
-            }
-        });
+                // 로그인 검증
+                if (employeeId === validUser.employeeId && password === validUser.password) {
+                    // 로그인 성공
+                    loginError.textContent = '';
+                    document.getElementById('loginSection').style.display = 'none'; // 로그인 섹션 숨기기
+                    document.getElementById('voteSection').style.display = 'block'; // 투표 섹션 보이기
+                } else {
+                    // 로그인 실패
+                    loginError.textContent = '사번 또는 비밀번호가 올바르지 않습니다.';
+                }
+            });
 
-        // "투표하기" 버튼 클릭 이벤트
-        document.getElementById('voteStart').addEventListener('click', function() {
-            // "투표하기" 버튼을 누르면 포스터 선택 화면을 보여줌
-            document.getElementById('posterSelection').style.display = 'block';
-            generatePosterList();
+            // "투표하기" 버튼 클릭 이벤트
+            document.getElementById('voteStart').addEventListener('click', function() {
+                // "투표하기" 버튼을 누르면 포스터 선택 화면을 보여줌
+                document.getElementById('posterSelection').style.display = 'block';
+                generatePosterList();
+            });
+
+            // 투표 완료 버튼 클릭 시
+            document.getElementById('voteForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                const maxVotes = 3; // 최대 투표 가능 수
+
+                if (checkedBoxes.length > maxVotes) {
+                    alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
+                    return;
+                }
+
+                const selectedPosters = Array.from(checkedBoxes).map(cb => cb.value);
+                console.log('선택된 포스터:', selectedPosters);
+
+                // Firebase에 저장
+                saveToFirebase(selectedPosters);
+            });
         });
 
         // 포스터 리스트 생성 함수
@@ -126,25 +149,6 @@
                 alert('투표 저장 중 오류가 발생했습니다.');
             }
         }
-
-        // 투표 완료 버튼 클릭 시
-        document.getElementById('voteForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            const maxVotes = 3; // 최대 투표 가능 수
-
-            if (checkedBoxes.length > maxVotes) {
-                alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
-                return;
-            }
-
-            const selectedPosters = Array.from(checkedBoxes).map(cb => cb.value);
-            console.log('선택된 포스터:', selectedPosters);
-
-            // Firebase에 저장
-            saveToFirebase(selectedPosters);
-        });
     </script>
 </body>
 </html>

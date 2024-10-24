@@ -54,7 +54,9 @@ function generatePosterList() {
         posterList.appendChild(label);
         posterList.appendChild(br);
     }
+}
 
+// Google Sheets에 결과 저장하는 함수
 async function saveToGoogleSheet(selectedPosters) {
     const response = await fetch('https://script.google.com/macros/s/AKfycbzvmG50HYflYPzin7bMWQu62vdJsQVVfMRlXUEdxaqnm0K4mWJ3lPh3GE1xuuCyaZSn/exec', {
         method: 'POST',
@@ -72,6 +74,8 @@ document.getElementById('voteForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    const maxVotes = 3;  // 포스터 최대 선택 수
+
     if (checkedBoxes.length > maxVotes) {
         alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
         return;

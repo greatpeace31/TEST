@@ -70,4 +70,28 @@ async function saveToGoogleSheet(selectedPosters) {
 }
 
 // 투표 완료 버튼 클릭 시
-document.getElementById('voteForm').addEventListener('submit', funct
+document.getElementById('voteForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    const maxVotes = 3;  // 포스터 최대 선택 수
+
+    if (checkedBoxes.length > maxVotes) {
+        alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
+        return;
+    }
+
+    const selectedPosters = Array.from(checkedBoxes).map(cb => cb.value);
+    console.log('선택된 포스터:', selectedPosters);
+
+    // Google Sheets에 결과 저장
+    saveToGoogleSheet(selectedPosters)
+        .then(() => {
+            alert('투표가 완료되었습니다!');
+            window.location.href = 'index.html';  // 투표 후 로그아웃
+        })
+        .catch(error => {
+            console.error('Error saving to Google Sheets:', error);
+            alert('투표 저장 중 오류가 발생했습니다.');
+        });
+});

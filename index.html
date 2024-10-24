@@ -40,22 +40,21 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
     <script>
-        // Firebase 설정 정보
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        // Firebase 초기화
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // DOMContentLoaded 이벤트 리스너 추가
         document.addEventListener("DOMContentLoaded", function() {
+            // Firebase 설정 정보
+            const firebaseConfig = {
+                apiKey: "YOUR_API_KEY",
+                authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_PROJECT_ID.appspot.com",
+                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+                appId: "YOUR_APP_ID"
+            };
+
+            // Firebase 초기화
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
             // 하드코딩된 로그인 정보 (사번 및 주민등록번호 앞 6자리)
             const validUsers = [
                 { employeeId: '106855', password: '970301' },
@@ -108,50 +107,50 @@
                 // Firebase에 저장
                 saveToFirebase(selectedPosters);
             });
+
+            // Firebase에 투표 결과 저장하는 함수
+            async function saveToFirebase(selectedPosters) {
+                try {
+                    const voteData = {
+                        posters: selectedPosters,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    await db.collection("votes").add(voteData);
+                    alert('투표가 완료되었습니다!');
+                    window.location.href = 'index.html'; // 투표 후 로그아웃
+                } catch (error) {
+                    console.error('Error saving to Firebase:', error);
+                    alert('투표 저장 중 오류가 발생했습니다.');
+                }
+            }
+
+            // 포스터 리스트 생성 함수
+            function generatePosterList() {
+                const posterList = document.getElementById('posterList');
+                const maxVotes = 3;
+                const posters = 32;  // 포스터 개수
+
+                // 기존 목록 삭제 (중복 방지)
+                posterList.innerHTML = '';
+
+                // 포스터 리스트 생성
+                for (let i = 1; i <= posters; i++) {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = 'poster' + i;
+                    checkbox.value = i;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = 'poster' + i;
+                    label.innerText = '포스터 ' + i;
+
+                    const br = document.createElement('br');
+                    posterList.appendChild(checkbox);
+                    posterList.appendChild(label);
+                    posterList.appendChild(br);
+                }
+            }
         });
-
-        // 포스터 리스트 생성 함수
-        function generatePosterList() {
-            const posterList = document.getElementById('posterList');
-            const maxVotes = 3;
-            const posters = 32;  // 포스터 개수
-
-            // 기존 목록 삭제 (중복 방지)
-            posterList.innerHTML = '';
-
-            // 포스터 리스트 생성
-            for (let i = 1; i <= posters; i++) {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = 'poster' + i;
-                checkbox.value = i;
-
-                const label = document.createElement('label');
-                label.htmlFor = 'poster' + i;
-                label.innerText = '포스터 ' + i;
-
-                const br = document.createElement('br');
-                posterList.appendChild(checkbox);
-                posterList.appendChild(label);
-                posterList.appendChild(br);
-            }
-        }
-
-        // Firebase에 투표 결과 저장하는 함수
-        async function saveToFirebase(selectedPosters) {
-            try {
-                const voteData = {
-                    posters: selectedPosters,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                await db.collection("votes").add(voteData);
-                alert('투표가 완료되었습니다!');
-                window.location.href = 'index.html'; // 투표 후 로그아웃
-            } catch (error) {
-                console.error('Error saving to Firebase:', error);
-                alert('투표 저장 중 오류가 발생했습니다.');
-            }
-        }
     </script>
 </body>
 </html>

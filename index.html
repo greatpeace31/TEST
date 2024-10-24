@@ -86,8 +86,10 @@
                 if (doc.exists) {
                     isValidUser = false;
                     loginError.textContent = '이미 투표를 완료한 사번입니다.';
+                } else {
+                    loginError.textContent = '';
                 }
-            }
+
 
             if (isValidUser) {
                 // 로그인 성공

@@ -78,6 +78,7 @@
 
             // 로그인 검증
             let isValidUser = validUsers.some(user => user.employeeId === employeeId && user.password === password);
+            let isDuplicateVote = false;
 
             // Firestore에서 해당 사번의 문서가 있는지 확인
             if (isValidUser) {
@@ -85,22 +86,23 @@
                 const doc = await docRef.get();
                 if (doc.exists) {
                     isValidUser = false;
-                    loginError.textContent = '이미 투표를 완료한 사번입니다.';
-                } else {
-                    loginError.textContent = '';
+                    isDuplicateVote = true;
                 }
-
+            }
 
             if (isValidUser) {
                 // 로그인 성공
                 loginError.textContent = '';
                 document.getElementById('loginSection').style.display = 'none'; // 로그인 섹션 숨기기
                 document.getElementById('voteSection').style.display = 'block'; // 투표 섹션 보이기
+            } else if (isDuplicateVote) {
+                // 이미 투표한 사용자
+                loginError.textContent = '이미 투표를 완료한 사번입니다.';
             } else {
                 // 로그인 실패
                 loginError.textContent = '사번 또는 비밀번호가 올바르지 않습니다.';
             }
-        });
+
 
             // "투표하기" 버튼 클릭 이벤트
             document.getElementById('voteStart').addEventListener('click', function() {

@@ -71,24 +71,34 @@
             ];
 
             // 로그인 버튼 클릭 이벤트
-            document.getElementById('loginButton').addEventListener('click', function() {
-                const employeeId = document.getElementById('employeeId').value;
-                const password = document.getElementById('password').value;
-                const loginError = document.getElementById('loginError');
+            document.getElementById('loginButton').addEventListener('click', async function() {
+            const employeeId = document.getElementById('employeeId').value;
+            const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
 
-                // 로그인 검증
-                const isValidUser = validUsers.some(user => user.employeeId === employeeId && user.password === password);
+            // 로그인 검증
+            let isValidUser = validUsers.some(user => user.employeeId === employeeId && user.password === password);
 
-                if (isValidUser) {
-                    // 로그인 성공
-                    loginError.textContent = '';
-                    document.getElementById('loginSection').style.display = 'none'; // 로그인 섹션 숨기기
-                    document.getElementById('voteSection').style.display = 'block'; // 투표 섹션 보이기
-                } else {
-                    // 로그인 실패
-                    loginError.textContent = '사번 또는 비밀번호가 올바르지 않습니다.';
+            // Firestore에서 해당 사번의 문서가 있는지 확인
+            if (isValidUser) {
+                const docRef = db.collection("votes").doc(employeeId);
+                const doc = await docRef.get();
+                if (doc.exists) {
+                    isValidUser = false;
+                    loginError.textContent = '이미 투표를 완료한 사번입니다.';
                 }
-            });
+            }
+
+            if (isValidUser) {
+                // 로그인 성공
+                loginError.textContent = '';
+                document.getElementById('loginSection').style.display = 'none'; // 로그인 섹션 숨기기
+                document.getElementById('voteSection').style.display = 'block'; // 투표 섹션 보이기
+            } else {
+                // 로그인 실패
+                loginError.textContent = '사번 또는 비밀번호가 올바르지 않습니다.';
+            }
+        });
 
             // "투표하기" 버튼 클릭 이벤트
             document.getElementById('voteStart').addEventListener('click', function() {

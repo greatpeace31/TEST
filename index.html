@@ -40,6 +40,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
     <script>
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+
+        
         // Firebase 설정 정보
         const firebaseConfig = {
         apiKey: "AIzaSyDwuJWSpcyJC-70weCp--AiZn5-NQDssts",
@@ -47,9 +56,13 @@
         projectId: "test-3241f",
         storageBucket: "test-3241f.appspot.com",
         messagingSenderId: "879797966506",
-        appId: "1:879797966506:web:dfa57f8d49269cb43d22d3",
-        measurementId: "G-6MDWTLHN6G"
+        appId: "1:879797966506:web:76b4fed298c638b23d22d3",
+        measurementId: "G-JM62V036H5"
         };
+
+// Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         
         // Firebase 초기화
         firebase.initializeApp(firebaseConfig);

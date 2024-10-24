@@ -55,22 +55,39 @@ function generatePosterList() {
         posterList.appendChild(br);
     }
 
-    // 투표 완료 버튼 클릭 시 처리
-    document.getElementById('voteForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-        if (checkedBoxes.length > maxVotes) {
-            alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
-            return;
-        }
-
-        const selectedPosters = Array.from(checkedBoxes).map(cb => cb.value);
-        console.log('선택된 포스터:', selectedPosters);
-
-        // 이후 Firebase 또는 Google Sheets로 데이터를 전송하는 로직 추가 가능
-
-        alert('투표가 완료되었습니다!');
-        window.location.href = 'index.html';  // 투표 후 로그아웃
+async function saveToGoogleSheet(selectedPosters) {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzvmG50HYflYPzin7bMWQu62vdJsQVVfMRlXUEdxaqnm0K4mWJ3lPh3GE1xuuCyaZSn/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ posters: selectedPosters })
     });
+    const data = await response.json();
+    return data;
 }
+
+// 투표 완료 버튼 클릭 시
+document.getElementById('voteForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    if (checkedBoxes.length > maxVotes) {
+        alert(`최대 ${maxVotes}개의 포스터만 선택할 수 있습니다.`);
+        return;
+    }
+
+    const selectedPosters = Array.from(checkedBoxes).map(cb => cb.value);
+    console.log('선택된 포스터:', selectedPosters);
+
+    // Google Sheets에 결과 저장
+    saveToGoogleSheet(selectedPosters)
+        .then(() => {
+            alert('투표가 완료되었습니다!');
+            window.location.href = 'index.html';  // 투표 후 로그아웃
+        })
+        .catch(error => {
+            console.error('Error saving to Google Sheets:', error);
+            alert('투표 저장 중 오류가 발생했습니다.');
+        });
+});

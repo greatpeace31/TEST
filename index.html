@@ -60,6 +60,9 @@
             }
             const db = firebase.firestore();
 
+            // Firestore 설정 (네트워크 연결 문제 방지)
+            db.settings({ ignoreUndefinedProperties: true });
+
             // 하드코딩된 로그인 정보 (사번 및 주민등록번호 앞 6자리)
             const validUsers = [
                 { employeeId: '106855', password: '970301' },

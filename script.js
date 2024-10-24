@@ -58,7 +58,7 @@ function generatePosterList() {
 
 // Google Sheets에 결과 저장하는 함수
 async function saveToGoogleSheet(selectedPosters) {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyKjMO0fAVLlr0LR83v7psbM9Z9AGwVzs7Z7utj8C7svO_L7aUuuistXd6vmGIwZpAC/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwl2iyd6r5IS10HS5wPTFChRDyXBOtLkaSvGQpVbMb7HVJLS6-KAbitMx7L3WMNqb3o/exec', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

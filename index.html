@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사내 학술 포스터 투표</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- style.css 파일이 없는 경우 링크를 제거하거나 파일을 추가하세요 -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
     <div id="loginSection">
@@ -54,6 +55,8 @@
             // Firebase 초기화
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
+            } else {
+                firebase.app(); // 이미 초기화된 경우 기존 앱 사용
             }
             const db = firebase.firestore();
 
@@ -110,6 +113,22 @@
                 saveToFirebase(selectedPosters);
             });
 
+            // Firebase에 투표 결과 저장하는 함수
+            async function saveToFirebase(selectedPosters) {
+                try {
+                    const voteData = {
+                        posters: selectedPosters,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    await db.collection("votes").add(voteData);
+                    alert('투표가 완료되었습니다!');
+                    window.location.href = 'index.html'; // 투표 후 로그아웃
+                } catch (error) {
+                    console.error('Error saving to Firebase:', error);
+                    alert('투표 저장 중 오류가 발생했습니다.');
+                }
+            }
+
             // 포스터 리스트 생성 함수
             function generatePosterList() {
                 const posterList = document.getElementById('posterList');
@@ -134,22 +153,6 @@
                     posterList.appendChild(checkbox);
                     posterList.appendChild(label);
                     posterList.appendChild(br);
-                }
-            }
-
-            // Firebase에 투표 결과 저장하는 함수
-            async function saveToFirebase(selectedPosters) {
-                try {
-                    const voteData = {
-                        posters: selectedPosters,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    };
-                    await db.collection("votes").add(voteData);
-                    alert('투표가 완료되었습니다!');
-                    window.location.href = 'index.html'; // 투표 후 로그아웃
-                } catch (error) {
-                    console.error('Error saving to Firebase:', error);
-                    alert('투표 저장 중 오류가 발생했습니다.');
                 }
             }
         });

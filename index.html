@@ -3,20 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포스터 투표 로그인</title>
+    <title>포스터 투표</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>로그인</h1>
-    <form id="loginForm">
-        <label for="empId">사번:</label>
-        <input type="text" id="empId" required><br>
+    <div id="loginSection">
+        <h1>로그인</h1>
+        <label for="employeeId">사번:</label>
+        <input type="text" id="employeeId" required>
+        <br>
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" required>
+        <br>
+        <button id="loginButton">로그인</button>
+        <p id="loginError" style="color:red;"></p>
+    </div>
 
-        <label for="password">비밀번호 (주민등록번호 앞 6자리):</label>
-        <input type="password" id="password" required><br>
-
-        <button type="submit">로그인</button>
-    </form>
+    <div id="voteSection" style="display:none;">
+        <h1>포스터 투표</h1>
+        <p>최대 3개의 포스터에 투표할 수 있습니다.</p>
+        <button id="voteStart">투표하기</button>
+        <div id="posterSelection" style="display:none;">
+            <form id="voteForm">
+                <div id="posterList">
+                    <!-- 포스터 목록이 여기 생성됩니다 -->
+                </div>
+                <button type="submit">투표 완료</button>
+            </form>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -65,7 +65,8 @@
             const validUsers = [
                 { employeeId: '106855', password: '970301', team: 'A' },
                 { employeeId: '102493', password: '770910', team: 'B' },
-                { employeeId: '100182', password: '731116', team: 'C' }
+                { employeeId: '100182', password: '731116', team: 'A' },
+                { employeeId: '106445', password: '920305', team: 'C' }
             ];
 
 document.getElementById('loginButton').addEventListener('click', async function() {
@@ -149,37 +150,22 @@ document.getElementById('loginButton').addEventListener('click', async function(
             // 포스터 리스트 생성 함수
             function generatePosterList() {
                 const posterList = document.getElementById('posterList');
-                const employeeId = document.getElementById('employeeId').value;
-                const user = validUsers.find(user => user.employeeId === employeeId);
                 const maxVotes = 3;
-                const posters = [
-                    { id: 1, team: 'A' },
-                    { id: 2, team: 'B' },
-                    { id: 3, team: 'C' },
-                    { id: 4, team: 'A' },
-                    { id: 5, team: 'A' },
-                    { id: 6, team: 'B' },
-                    // ... (다른 포스터들에 대한 정보 추가)
-                ];
+                const posters = 32;  // 포스터 개수
 
                 // 기존 목록 삭제 (중복 방지)
                 posterList.innerHTML = '';
 
                 // 포스터 리스트 생성
-                for (let i = 0; i < posters.length; i++) {
-                    const poster = posters[i];
-                    if (poster.team === user.team) {
-                        // 동일 팀의 포스터는 표시하지 않음
-                        continue;
-                    }
+                for (let i = 1; i <= posters; i++) {
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
-                    checkbox.id = 'poster' + poster.id;
-                    checkbox.value = poster.id;
+                    checkbox.id = 'poster' + i;
+                    checkbox.value = i;
 
                     const label = document.createElement('label');
-                    label.htmlFor = 'poster' + poster.id;
-                    label.innerText = '포스터 ' + poster.id;
+                    label.htmlFor = 'poster' + i;
+                    label.innerText = '포스터 ' + i;
 
                     const br = document.createElement('br');
                     posterList.appendChild(checkbox);
@@ -187,7 +173,6 @@ document.getElementById('loginButton').addEventListener('click', async function(
                     posterList.appendChild(br);
                 }
             }
-
         });
     </script>
 </body>

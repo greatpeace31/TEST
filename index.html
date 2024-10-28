@@ -5,6 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사내 학술 포스터 투표</title>
+        <style>
+        #posterList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* 카드 간의 간격 */
+        }
+
+        .poster-card {
+            width: 30%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .poster-image {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .poster-info {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <div id="loginSection">
@@ -147,38 +174,12 @@ document.getElementById('loginButton').addEventListener('click', async function(
             }
 
             const posters = [
-                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A' },
-                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A' },
-                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A' },
-                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B' },
-                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C' },
-                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 7, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 8, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 9, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 10, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 11, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 12, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 13, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 14, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 15, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 16, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 17, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 18, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 19, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 20, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 21, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 22, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 23, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 24, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 25, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 26, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 27, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 28, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 29, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 30, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 31, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
-                { number: 32, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표' },
+                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A', imagePhat: '/poster1.jpg' },
+                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A', imagePhat: '/poster2.jpg' },
+                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A', imagePhat: '/poster3.jpg' },
+                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B', imagePhat: '/poster4.jpg' },
+                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C', imagePhat: '/poster5.jpg' },
+                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표', imagePhat: '/poster6.jpg' },
                 // 나머지 포스터 정보들도 여기에 추가
             ];
 
@@ -191,24 +192,32 @@ document.getElementById('loginButton').addEventListener('click', async function(
 
                 // 포스터 리스트 생성
                 posters.forEach(poster => {
+                    // 포스터 카드 생성
+                    const posterCard = document.createElement('div');
+                    posterCard.className = 'poster-card';
+
+                    // 이미지 태그 생성
+                    const img = document.createElement('img');
+                    img.src = poster.imagePath;
+                    img.alt = `포스터 ${poster.number} 이미지`;
+                    img.className = 'poster-image';
+
+                    // 포스터 정보 생성
+                    const info = document.createElement('div');
+                    info.className = 'poster-info';
+                    info.innerText = `${poster.number}. ${poster.title}/${poster.author}/${poster.team} - ${poster.category}`;
+
                     // 체크박스 생성
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.id = 'poster' + poster.number;
                     checkbox.value = poster.number;
 
-                    // 라벨 생성
-                    const label = document.createElement('label');
-                    label.htmlFor = 'poster' + poster.number;
-                    label.innerText = `${poster.number}. ${poster.team} ${poster.author}`;
-
-                    // 줄바꿈 태그 추가
-                    const br = document.createElement('br');
-
                     // 요소 추가
-                    posterList.appendChild(checkbox);
-                    posterList.appendChild(label);
-                    posterList.appendChild(br);
+                    posterCard.appendChild(img);
+                    posterCard.appendChild(info);
+                    posterCard.appendChild(checkbox);
+                    posterList.appendChild(posterCard);
                 });
             }
         });

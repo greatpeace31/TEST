@@ -146,32 +146,41 @@ document.getElementById('loginButton').addEventListener('click', async function(
                 }
             }
 
+            const posters = [
+                { number: 1, title: '포스터 제목 1', author: '작성자 A', team: 'A', category: '기술 발표' },
+                { number: 2, title: '포스터 제목 2', author: '작성자 B', team: 'B', category: '연구 성과' },
+                { number: 3, title: '포스터 제목 3', author: '작성자 C', team: 'A', category: '기술 발표' },
+                // 나머지 포스터 정보들도 여기에 추가
+            ];
 
             // 포스터 리스트 생성 함수
             function generatePosterList() {
                 const posterList = document.getElementById('posterList');
-                const maxVotes = 3;
-                const posters = 32;  // 포스터 개수
 
                 // 기존 목록 삭제 (중복 방지)
                 posterList.innerHTML = '';
 
                 // 포스터 리스트 생성
-                for (let i = 1; i <= posters; i++) {
+                posters.forEach(poster => {
+                    // 체크박스 생성
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
-                    checkbox.id = 'poster' + i;
-                    checkbox.value = i;
+                    checkbox.id = 'poster' + poster.number;
+                    checkbox.value = poster.number;
 
+                    // 라벨 생성
                     const label = document.createElement('label');
-                    label.htmlFor = 'poster' + i;
-                    label.innerText = '포스터 ' + i;
+                    label.htmlFor = 'poster' + poster.number;
+                    label.innerText = `번호: ${poster.number}, 제목: ${poster.title}, 작성자: ${poster.author}, 팀: ${poster.team}, 구분: ${poster.category}`;
 
+                    // 줄바꿈 태그 추가
                     const br = document.createElement('br');
+
+                    // 요소 추가
                     posterList.appendChild(checkbox);
                     posterList.appendChild(label);
                     posterList.appendChild(br);
-                }
+                });
             }
         });
     </script>

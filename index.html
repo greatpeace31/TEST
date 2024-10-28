@@ -171,7 +171,7 @@ document.getElementById('loginButton').addEventListener('click', async function(
                     // 라벨 생성
                     const label = document.createElement('label');
                     label.htmlFor = 'poster' + poster.number;
-                    label.innerText = `번호: ${poster.number}, 제목: ${poster.title}, 작성자: ${poster.author}, 팀: ${poster.team}, 구분: ${poster.category}`;
+                    label.innerText = `${poster.number}. ${poster.title}/${poster.author}/${poster.team} - ${poster.category}`;
 
                     // 줄바꿈 태그 추가
                     const br = document.createElement('br');

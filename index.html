@@ -205,7 +205,7 @@ document.getElementById('loginButton').addEventListener('click', async function(
                     // 포스터 정보 생성
                     const info = document.createElement('div');
                     info.className = 'poster-info';
-                    info.innerText = `${poster.number}. ${poster.title}/${poster.author}/${poster.team} - ${poster.category}`;
+                    info.innerText = `${poster.number}. ${poster.team} ${poster.author} - ${poster.category}`;
 
                     // 체크박스 생성
                     const checkbox = document.createElement('input');

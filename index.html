@@ -30,32 +30,6 @@
         .poster-info {
             margin: 10px 0;
             font-size: 16px;
-
-        .poster-image {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer; /* 마우스를 올렸을 때 손가락 모양 커서로 변경 */
-        }
-
-            #imageModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* 페이지의 다른 요소보다 위에 있도록 설정 */
-}
-
-#modalImage {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
-}
         }
     </style>
 </head>
@@ -247,33 +221,9 @@ document.getElementById('loginButton').addEventListener('click', async function(
                         window.open(poster.imagePath, '_blank'); // 새 탭에서 이미지 열기
                     });
 
-                    // 모달 창 요소
-const imageModal = document.getElementById('imageModal');
-const modalImage = document.getElementById('modalImage');
-
-function generatePosterList() {
-    const posterList = document.getElementById('posterList');
-
-    // 기존 목록 삭제 (중복 방지)
-    posterList.innerHTML = '';
-
-    // 포스터 리스트 생성
-    posters.forEach(poster => {
-        // 포스터 카드 생성
-        const posterCard = document.createElement('div');
-        posterCard.className = 'poster-card';
-
-        // 이미지 태그 생성
-        const img = document.createElement('img');
-        img.src = poster.imagePath;
-        img.alt = `포스터 ${poster.number} 이미지`;
-        img.className = 'poster-image';
-
-        // 이미지 클릭 시 모달 창 열기
-        img.addEventListener('click', function() {
-            modalImage.src = poster.imagePath;
-            imageModal.style.display = 'flex';
-        });
+                    img.addEventListener('touchstart', function() {
+                    window.open(poster.imagePath, '_blank'); // 모바일 터치 시 이미지 열기
+                });
 
                     // 포스터 정보 생성
                     const info = document.createElement('div');
@@ -293,15 +243,7 @@ function generatePosterList() {
                     posterList.appendChild(posterCard);
                 });
             }
-
-                    // 모달 창을 클릭하면 닫기
-imageModal.addEventListener('click', function() {
-    imageModal.style.display = 'none';
         });
-
-        <div id="imageModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-    <img id="modalImage" style="max-width:90%; max-height:90%;">
-</div>
     </script>
 </body>
 </html>

@@ -88,9 +88,16 @@
 
             // 로그아웃 버튼 클릭 이벤트
             document.getElementById('logoutButton').addEventListener('click', function() {
-            document.getElementById('voteSection').style.display = 'none'; // 투표 섹션 숨기기
-            document.getElementById('loginSection').style.display = 'block'; // 로그인 섹션 보이기
-        });
+                document.getElementById('voteSection').style.display = 'none'; // 투표 섹션 숨기기
+                document.getElementById('loginSection').style.display = 'block'; // 로그인 섹션 보이기
+
+                // 입력 필드 및 상태 초기화
+                document.getElementById('employeeId').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('posterSelection').style.display = 'none';
+                document.getElementById('posterList').innerHTML = '';
+            });
 
             // Firestore 설정 (네트워크 연결 문제 방지)
             db.settings({ ignoreUndefinedProperties: true });
@@ -181,12 +188,12 @@ document.getElementById('loginButton').addEventListener('click', async function(
             }
 
             const posters = [
-                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
-                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster2.jpg' },
-                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster3.jpg' },
-                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster4.jpg' },
-                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster5.jpg' },
-                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표', imagePhat: 'https://greatpeace31.github.io/TEST/images/poster6.jpg' },
+                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A', imagePath: '/images/poster1.jpg' },
+                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A', imagePath: '/images/poster2.jpg' },
+                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A', imagePath: '/images/poster3.jpg' },
+                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B', imagePath: '/images/poster4.jpg' },
+                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C', imagePath: '/images/poster5.jpg' },
+                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표', imagePath: '/images/poster6.jpg' },
                 // 나머지 포스터 정보들도 여기에 추가
             ];
 

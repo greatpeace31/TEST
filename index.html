@@ -50,6 +50,7 @@
         <h1>포스터 투표</h1>
         <p>최대 3개의 포스터에 투표할 수 있습니다.</p>
         <button id="voteStart">투표하기</button>
+        <button id="logoutButton">로그아웃</button> <!-- 여기에 로그아웃 버튼 추가 -->
         <div id="posterSelection" style="display:none;">
             <form id="voteForm">
                 <div id="posterList">
@@ -84,6 +85,12 @@
                 firebase.app(); // 이미 초기화된 경우 기존 앱 사용
             }
             const db = firebase.firestore();
+
+            // 로그아웃 버튼 클릭 이벤트
+            document.getElementById('logoutButton').addEventListener('click', function() {
+            document.getElementById('voteSection').style.display = 'none'; // 투표 섹션 숨기기
+            document.getElementById('loginSection').style.display = 'block'; // 로그인 섹션 보이기
+        });
 
             // Firestore 설정 (네트워크 연결 문제 방지)
             db.settings({ ignoreUndefinedProperties: true });

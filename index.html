@@ -188,12 +188,12 @@ document.getElementById('loginButton').addEventListener('click', async function(
             }
 
             const posters = [
-                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A', imagePath: 'https://greatpeace31.github.io/TEST/images/title1.jpg' },
-                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A', imagePath: '/images/poster2.jpg' },
-                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A', imagePath: '/images/poster3.jpg' },
-                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B', imagePath: '/images/poster4.jpg' },
-                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C', imagePath: '/images/poster5.jpg' },
-                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표', imagePath: '/images/poster6.jpg' },
+                { number: 1, title: '포스터 제목 1', author: '김민영', team: '제제연구실', category: 'A', imagePath: 'https://greatpeace31.github.io/TEST/images/title1.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
+                { number: 2, title: '포스터 제목 2', author: '김준헌', team: '제제연구실', category: 'A', imagePath: '/images/poster2.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
+                { number: 3, title: '포스터 제목 3', author: '정종호', team: '제제연구실', category: 'A', imagePath: '/images/poster3.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
+                { number: 4, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'B', imagePath: '/images/poster4.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
+                { number: 5, title: '포스터 제목 3', author: '작성자', team: 'A', category: 'C', imagePath: '/images/poster5.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
+                { number: 6, title: '포스터 제목 3', author: '작성자', team: 'A', category: '기술 발표', imagePath: '/images/poster6.jpg', posterPath: 'https://greatpeace31.github.io/TEST/images/poster1.jpg' },
                 // 나머지 포스터 정보들도 여기에 추가
             ];
 
@@ -210,17 +210,16 @@ document.getElementById('loginButton').addEventListener('click', async function(
                     const posterCard = document.createElement('div');
                     posterCard.className = 'poster-card';
 
-                    // 이미지 태그 생성
+                    // 제목 이미지 태그 생성
                     const img = document.createElement('img');
-                    img.src = poster.imagePath;
+                    img.src = poster.imagePath;  // 제목 이미지 사용
                     img.alt = `포스터 ${poster.number} 이미지`;
                     img.className = 'poster-image';
 
-                    // 이미지 클릭 시 새 탭에서 크게 열기
+                    // 제목 이미지 클릭 시 실제 포스터 새 탭에서 열기
                     img.addEventListener('click', function() {
-                        window.open(poster.imagePath, '_blank'); // 새 탭에서 이미지 열기
+                        window.open(poster.posterPath, '_blank'); // 실제 포스터 이미지 새 탭에서 열기
                     });
-
 
                     // 포스터 정보 생성
                     const info = document.createElement('div');
